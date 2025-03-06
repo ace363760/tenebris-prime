@@ -86,6 +86,11 @@ local function create_bioluminescent_entity(entities, cost, entity_mod, exclude,
                         scale = light_scale or 8,
                         draw_as_light = true,
                     },
+                    -- Next 3 prevent normal structures from downgrading or upgrading to biolum-versions
+                    next_upgrade = (function() if entity.next_upgrade then return ("bioluminescent-" .. entity.next_upgrade) else return "" end end)(),
+                    fast_replaceable_group = (function() if entity.fast_replaceable_group then return ("bioluminescent-" .. entity.fast_replaceable_group) else return "" end end)(),
+                    additional_pastable_entities = (function() if entity.additional_pastable_entities then return ("bioluminescent-" .. entity.additional_pastable_entities) else return nil end end)(),
+                    
                     minable = { mining_time = 0.2, result = "bioluminescent-" .. entity.minable.result },
                     surface_conditions = meld.overwrite {
                         {
